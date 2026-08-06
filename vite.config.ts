@@ -1,15 +1,13 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
+import tailwindcss from '@tailwindcss/vite';
 
+// https://vite.dev/config/
 export default defineConfig({
-  plugins: [react()],
+  plugins: [react(), tailwindcss()],
   base: '/alro-gmbh/',
   server: {
-    port: 3006,
-    host: true
-  },
-  preview: {
-    port: 3006,
+    port: 3054,
     host: true
   }
 });

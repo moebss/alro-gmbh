@@ -1,210 +1,213 @@
 import { useState } from 'react';
-import { Phone, Star, ShieldCheck, ArrowRight, CheckCircle2, Building2, HelpCircle, ChevronDown, Send } from 'lucide-react';
+import { Phone, ShieldCheck, Clock, MapPin, CheckCircle2, Calculator, X, Layers } from 'lucide-react';
 
 export default function App() {
-  const [openFaq, setOpenFaq] = useState<number | null>(0);
-  const [submitted, setSubmitted] = useState(false);
-
-  const scrollToContact = () => {
-    document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
-  };
+  const [isCalculatorOpen, setIsCalculatorOpen] = useState(false);
+  const [isImpressumOpen, setIsImpressumOpen] = useState(false);
+  const [isDatenschutzOpen, setIsDatenschutzOpen] = useState(false);
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 font-sans selection:bg-orange-600 selection:text-white">
+    <div className="min-h-screen bg-[#09090b] text-zinc-100 selection:bg-orange-500 selection:text-zinc-950">
       
-      <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200 py-4 shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-slate-950 text-white flex items-center justify-center font-extrabold text-lg">
-              A
-            </div>
-            <div>
-              <span className="font-extrabold text-lg sm:text-xl text-slate-950 tracking-tight block">
-                ALRO GmbH
+      {/* Top Header */}
+      <header className="sticky top-0 z-50 backdrop-blur-xl bg-zinc-950/90 border-b border-zinc-800">
+        <div className="hidden lg:block bg-zinc-900 border-b border-zinc-800 py-2 px-6 text-xs text-zinc-300">
+          <div className="max-w-7xl mx-auto flex items-center justify-between">
+            <div className="flex items-center gap-6">
+              <span className="flex items-center gap-2">
+                <MapPin className="w-3.5 h-3.5 text-orange-500" />
+                <span>Kerpen & Erftkreis (Zertifiziert nach DIN EN 1090)</span>
               </span>
-              <span className="text-[10px] text-slate-500 font-bold uppercase tracking-wider block">
-                Meisterbetrieb • Metallbau & Industrieanlagen
+              <span className="flex items-center gap-2">
+                <Clock className="w-3.5 h-3.5 text-orange-500" />
+                <span>Mo - Fr: 07:30 - 17:00 Uhr</span>
               </span>
             </div>
+            <a href="tel:02237670127" className="font-bold text-white hover:text-orange-400">
+              ☎ 02237 / 67 01 27
+            </a>
           </div>
+        </div>
 
-          <div className="flex items-center gap-4">
-            <a href="tel:02237670127" className="hidden sm:flex items-center gap-2 text-xs font-bold text-slate-800 bg-slate-100 hover:bg-slate-200 px-3.5 py-2 rounded-xl border border-slate-200 transition-all"><Phone className="w-3.5 h-3.5 text-slate-900" /><span>02237 67 01 27</span></a>
-            <button
-              onClick={scrollToContact}
-              className="bg-orange-600 hover:bg-orange-700 text-white font-bold text-xs uppercase tracking-wider px-4 py-2.5 rounded-xl shadow-md shadow-orange-600/20 transition-all cursor-pointer"
-            >
-              Kostenlose Anfrage in 2 Min.
-            </button>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-20">
+            <a href="#" className="flex items-center gap-3">
+              <div className="w-11 h-11 rounded-xl bg-gradient-to-tr from-orange-600 to-amber-500 flex items-center justify-center text-zinc-950 font-black shadow-md">
+                <Layers className="w-6 h-6 stroke-[2.5]" />
+              </div>
+              <div>
+                <span className="font-heading text-xl font-black uppercase text-white block leading-none">
+                  ALRO <span className="text-orange-500">GMBH</span>
+                </span>
+                <span className="text-[10px] text-orange-400 font-bold uppercase tracking-wider block mt-1">
+                  METALLBAU & STAHLKONSTRUKTION KERPEN
+                </span>
+              </div>
+            </a>
+
+            <div className="flex items-center gap-4">
+              <a
+                href="tel:02237670127"
+                className="hidden sm:inline-flex items-center gap-2 bg-zinc-900 hover:bg-zinc-800 border border-zinc-700 text-white px-4 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider"
+              >
+                <Phone className="w-4 h-4 text-orange-500" />
+                <span>02237 / 67 01 27</span>
+              </a>
+
+              <button
+                onClick={() => setIsCalculatorOpen(true)}
+                className="bg-orange-600 hover:bg-orange-500 text-zinc-950 font-extrabold px-5 py-2.5 rounded-xl text-xs uppercase tracking-wider shadow-lg shadow-orange-600/20"
+              >
+                <span>Angebot Anfragen</span>
+              </button>
+            </div>
           </div>
         </div>
       </header>
 
-      <section className="relative min-h-[80vh] flex flex-col lg:flex-row bg-slate-50 border-b border-slate-200 overflow-hidden">
-        <div className="w-full lg:w-1/2 flex flex-col justify-center px-6 sm:px-12 lg:px-16 py-16 lg:py-24 space-y-6">
-          
-          <div className="inline-flex items-center gap-2 bg-white border border-slate-300 shadow-sm rounded-full px-4 py-1.5 text-xs font-bold text-slate-800 w-fit">
-            <div className="flex text-slate-800 gap-0.5">
-              {[...Array(5)].map((_, i) => (
-                <Star key={i} className="w-3.5 h-3.5 fill-slate-800" />
-              ))}
-            </div>
-            <span>4.9 / 5.0 Sterne • Regionaler Meisterbetrieb</span>
-          </div>
-
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-slate-950 leading-[1.1] text-balance">
-            Präzisions-Metallbau, Stahlkonstruktionen & Industriedienstleistungen
-          </h1>
-
-          <p className="text-base sm:text-lg text-slate-700 leading-relaxed text-pretty">
-            Ihr verlässlicher Partner für Metallbau & Industrieanlagen. Wir garantieren höchste Ausführungsqualität, meisterhafte Handwerkskunst und feste Terminabsprachen.
-          </p>
-
-          <div className="pt-2 flex flex-col sm:flex-row gap-4">
-            <button
-              onClick={scrollToContact}
-              className="inline-flex items-center justify-center gap-3 bg-orange-600 hover:bg-orange-700 text-white font-bold text-sm uppercase tracking-wider px-7 py-4 rounded-xl shadow-xl shadow-orange-600/30 hover:-translate-y-0.5 transition-all cursor-pointer group"
-            >
-              <span>Kostenlose Anfrage in 2 Min.</span>
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </button>
-
-            <a href="tel:02237670127" className="inline-flex items-center justify-center gap-3 bg-slate-950 hover:bg-slate-800 text-white font-bold text-sm px-6 py-4 rounded-xl shadow-sm transition-all"><Phone className="w-4 h-4 text-slate-300" /><span>Direkt anrufen: 02237 67 01 27</span></a>
-          </div>
-
-          <div className="pt-6 border-t border-slate-200 grid grid-cols-3 gap-3 text-xs sm:text-sm font-bold text-slate-900">
-            <div className="flex items-center gap-2">
-              <ShieldCheck className="w-4 h-4 text-slate-800 shrink-0" />
-              <span>Meisterqualität</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <Building2 className="w-4 h-4 text-slate-800 shrink-0" />
-              <span>Fixpreisgarantie</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <CheckCircle2 className="w-4 h-4 text-slate-800 shrink-0" />
-              <span>Termintreue</span>
-            </div>
-          </div>
-        </div>
-
-        <div className="w-full lg:w-1/2 relative min-h-[380px] lg:min-h-full bg-slate-900 flex items-center justify-center p-8">
-          <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-slate-950 to-slate-900 opacity-95" />
-          <div className="relative z-10 text-center space-y-4 max-w-md p-8 border border-slate-800 rounded-3xl bg-slate-900/80 backdrop-blur-md shadow-2xl">
-            <div className="w-16 h-16 rounded-2xl bg-slate-800 text-white flex items-center justify-center font-extrabold text-2xl mx-auto shadow-inner">
-              A
-            </div>
-            <h3 className="text-2xl font-extrabold text-white">ALRO GmbH</h3>
-            <p className="text-sm text-slate-300 leading-relaxed">
-              Erstklassige Handwerksleistungen für private & gewerbliche Auftraggeber in der Region.
-            </p>
-            <div className="pt-2 flex items-center justify-center gap-2 text-xs font-bold text-slate-400">
-              <span>Ansprechpartner: Geschäftsführung ALRO</span>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="py-20 bg-slate-950 text-white border-t border-slate-900">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="text-center max-w-3xl mx-auto space-y-3 mb-16">
-            <p className="text-xs font-semibold text-slate-400 uppercase tracking-widest">Leistungsübersicht</p>
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-white">Unsere Fachleistungen im Überblick</h2>
-            <p className="text-sm text-slate-300">Ausgeführt nach höchsten handwerklichen Qualitätsstandards.</p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
-              { title: 'Fachgerechte Ausführung', desc: 'Präzise Handwerksarbeit mit zertifizierten Qualitäts-Baustoffen.' },
-              { title: 'Projektplanung & Beratung', desc: 'Persönliche Beratung vor Ort und transparente Angebotserstellung.' },
-              { title: 'Wartung & Instandhaltung', desc: 'Zuverlässiger Service, Reparaturen & nachhaltige Objektbetreuung.' }
-            ].map((s, idx) => (
-              <div key={idx} className="bg-slate-900 border border-slate-800 rounded-2xl p-8 shadow-xl flex flex-col justify-between">
-                <div className="space-y-4">
-                  <div className="w-12 h-12 rounded-xl bg-slate-800 text-white flex items-center justify-center font-bold">
-                    0{idx + 1}
-                  </div>
-                  <h3 className="text-xl font-bold text-white">{s.title}</h3>
-                  <p className="text-sm text-slate-400 leading-relaxed">{s.desc}</p>
-                </div>
-                <button onClick={scrollToContact} className="inline-flex items-center gap-2 text-xs font-bold text-slate-300 hover:text-white pt-6 border-t border-slate-800/80 cursor-pointer">
-                  <span>Details & Preise anfragen →</span>
-                </button>
+      {/* Hero */}
+      <section className="relative py-20 lg:py-28 bg-[#09090b] border-b border-zinc-800">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid lg:grid-cols-12 gap-12 items-center">
+            
+            <div className="lg:col-span-7 space-y-6">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-zinc-900 border border-orange-500/30 text-orange-400 text-xs font-bold uppercase tracking-wider">
+                <ShieldCheck className="w-4 h-4 text-orange-500" />
+                <span>Zertifizierter Schweißfachbetrieb EN 1090</span>
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
-      <section className="py-20 bg-slate-50 border-t border-slate-200">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6">
-          <div className="text-center space-y-3 mb-16">
-            <p className="text-xs font-semibold text-slate-500 uppercase tracking-widest">Häufige Fragen</p>
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-950">Transparenz für Ihr Vorhaben</h2>
-          </div>
+              <h1 className="font-heading text-4xl sm:text-6xl uppercase tracking-tight text-white font-black leading-[1.05]">
+                PRÄZISION IN STAHL, <br />
+                <span className="text-orange-500">EDELSTAHL & METALLBAU</span>
+              </h1>
 
-          <div className="space-y-4">
-            {[
-              { q: 'Wie schnell erhalte ich ein Angebot?', a: 'Wir rufen Sie innerhalb von 24 Stunden zurück und erstellen nach Erstberatung ein verbindliches Angebot.' },
-              { q: 'Gibt es eine Festpreiszusage?', a: 'Ja, wir arbeiten mit transparenten Angeboten und garantieren Ihnen volle Kostenkontrolle.' },
-              { q: 'In welchem Umkreis sind Sie tätig?', a: 'Wir sind im gesamten regionalen Umkreis sowie der umliegenden Region im Einsatz.' }
-            ].map((faq, idx) => (
-              <div key={idx} className="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm">
+              <p className="text-zinc-300 text-lg font-light leading-relaxed max-w-xl">
+                Von individuellen Geländern, Balkonen & Treppenanlagen bis zu Hallenbau & Industriemontage – ALRO GmbH baut langlebige Metallkonstruktionen für Gewerbe & Privat.
+              </p>
+
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-2">
                 <button
-                  onClick={() => setOpenFaq(openFaq === idx ? null : idx)}
-                  className="w-full p-6 text-left flex items-center justify-between font-bold text-slate-950 text-base sm:text-lg cursor-pointer"
+                  onClick={() => setIsCalculatorOpen(true)}
+                  className="bg-orange-600 hover:bg-orange-500 text-zinc-950 font-extrabold px-8 py-4 rounded-xl text-xs uppercase tracking-wider shadow-xl shadow-orange-600/25 flex items-center justify-center gap-2"
                 >
-                  <span className="flex items-center gap-3">
-                    <HelpCircle className="w-5 h-5 text-slate-700 shrink-0" />
-                    <span>{faq.q}</span>
-                  </span>
-                  <ChevronDown className={`w-5 h-5 text-slate-500 transition-transform ${openFaq === idx ? 'rotate-180' : ''}`} />
+                  <Calculator className="w-4 h-4" />
+                  <span>Kostenfreies Angebot Anfragen</span>
                 </button>
-                {openFaq === idx && (
-                  <div className="px-6 pb-6 text-sm text-slate-600 border-t border-slate-100 pt-4">
-                    {faq.a}
+
+                <a
+                  href="tel:02237670127"
+                  className="bg-zinc-900 hover:bg-zinc-800 border border-zinc-700 text-white font-bold px-7 py-4 rounded-xl text-xs uppercase tracking-wider flex items-center justify-center gap-2"
+                >
+                  <Phone className="w-4 h-4 text-orange-500" />
+                  <span>02237 / 67 01 27</span>
+                </a>
+              </div>
+            </div>
+
+            <div className="lg:col-span-5">
+              <div className="relative rounded-2xl overflow-hidden border border-zinc-800 shadow-2xl aspect-[4/5] bg-zinc-900">
+                <img
+                  src="https://images.unsplash.com/photo-1504917599217-d4dc5ebe6122?auto=format&fit=crop&w=1000&q=80"
+                  alt="ALRO GmbH Metallbau Kerpen"
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/20 to-transparent" />
+                <div className="absolute bottom-6 left-6 right-6 p-4 rounded-xl bg-zinc-950/90 border border-zinc-800 flex items-center justify-between">
+                  <div>
+                    <span className="text-xs text-orange-400 font-bold uppercase block">Industrie & Privat</span>
+                    <span className="text-sm font-bold text-white">Höchste Ausführungsstandards</span>
                   </div>
-                )}
+                  <CheckCircle2 className="w-8 h-8 text-orange-500" />
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      {/* Services */}
+      <section className="py-20 bg-zinc-950 border-b border-zinc-900">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center max-w-3xl mx-auto mb-16">
+            <span className="text-orange-500 font-bold text-xs uppercase tracking-widest block mb-2">Leistungsspektrum</span>
+            <h2 className="font-heading text-3xl sm:text-4xl uppercase tracking-tight text-white font-black">Metallbau nach Maß</h2>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            {[
+              { title: 'Treppen & Geländer', desc: 'Edelstahl- & Stahlgeländer mit Glas, Spindeltreppen & Fluchttreppen.' },
+              { title: 'Balkon- & Überdachungen', desc: 'Wetterfeste Glasüberdachungen, Vordächer & angehängte Balkone.' },
+              { title: 'Stahlbau & Industriemontage', desc: 'Tragwerkskonstruktionen, Hallenbau & Lohnfertigung nach EN 1090.' }
+            ].map((s, idx) => (
+              <div key={idx} className="metal-card rounded-2xl p-6 hover:border-orange-500/50 transition-colors">
+                <div className="w-12 h-12 rounded-xl bg-orange-500/10 border border-orange-500/20 flex items-center justify-center text-orange-500 mb-4">
+                  <Layers className="w-6 h-6" />
+                </div>
+                <h3 className="font-heading text-xl font-bold text-white mb-2">{s.title}</h3>
+                <p className="text-sm text-zinc-400 leading-relaxed">{s.desc}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      <section id="contact" className="py-20 bg-slate-950 text-white border-t border-slate-900">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 grid grid-cols-1 lg:grid-cols-12 gap-12">
-          <div className="lg:col-span-5 space-y-6">
-            <p className="text-xs font-semibold text-slate-400 uppercase tracking-widest">Projektkontakt</p>
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-white">Besprechen Sie Ihr Vorhaben mit uns.</h2>
-            <p className="text-sm text-slate-300">Senden Sie uns Ihre Anfrage oder rufen Sie uns direkt an.</p>
-            <div className="bg-slate-900 border border-slate-800 p-4 rounded-xl flex items-center gap-4"><Phone className="w-6 h-6 text-white shrink-0" /><div><h4 className="text-xs text-slate-400 font-semibold uppercase">Telefonische Bauleitung</h4><a href="tel:02237670127" className="text-base font-extrabold text-white hover:underline">02237 67 01 27</a></div></div>
+      {/* Footer */}
+      <footer className="bg-zinc-950 border-t border-zinc-900 py-12 text-xs text-zinc-400">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div>
+            © 2026 ALRO GmbH Metallbau Kerpen • All Rights Reserved
           </div>
-
-          <div className="lg:col-span-7 bg-slate-900 border border-slate-800 rounded-2xl p-8 shadow-2xl">
-            {submitted ? (
-              <div className="py-12 text-center space-y-3">
-                <h3 className="text-xl font-bold text-white">Vielen Dank für Ihre Anfrage!</h3>
-                <p className="text-sm text-slate-400">Wir melden uns innerhalb von 24 Stunden bei Ihnen.</p>
-              </div>
-            ) : (
-              <form onSubmit={(e) => { e.preventDefault(); setSubmitted(true); }} className="space-y-4">
-                <h3 className="text-xl font-bold text-white mb-2">Unverbindliche Anfrage stellen</h3>
-                <input required placeholder="Vollständiger Name *" className="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 text-white text-sm" />
-                <input required type="tel" placeholder="Telefonnummer *" className="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 text-white text-sm" />
-                <textarea rows={3} placeholder="Beschreiben Sie kurz Ihr Anliegen..." className="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 text-white text-sm resize-none" />
-                <button type="submit" className="w-full py-4 bg-orange-600 hover:bg-orange-700 text-white font-bold text-sm uppercase tracking-wider rounded-xl shadow-lg shadow-orange-600/30 flex items-center justify-center gap-2 cursor-pointer">
-                  <Send className="w-4 h-4" />
-                  <span>Kostenlose Anfrage absenden</span>
-                </button>
-              </form>
-            )}
+          <div className="flex items-center gap-6">
+            <button onClick={() => setIsImpressumOpen(true)} className="hover:text-orange-400">Impressum</button>
+            <button onClick={() => setIsDatenschutzOpen(true)} className="hover:text-orange-400">Datenschutz</button>
           </div>
         </div>
-      </section>
-
-      <footer className="py-8 bg-slate-950 text-slate-400 text-xs border-t border-slate-900 text-center">
-        <p>© {new Date().getFullYear()} ALRO GmbH. Alle Rechte vorbehalten. Meisterbetrieb.</p>
       </footer>
+
+      {/* Calculator Modal */}
+      {isCalculatorOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-zinc-950/80 backdrop-blur-md">
+          <div className="bg-zinc-900 border border-zinc-800 rounded-2xl max-w-md w-full p-6 space-y-4">
+            <div className="flex justify-between items-center border-b border-zinc-800 pb-3">
+              <h3 className="font-heading text-lg font-bold text-white">Metallbau-Angebot Anfragen</h3>
+              <button onClick={() => setIsCalculatorOpen(false)} className="text-zinc-400 hover:text-white"><X className="w-5 h-5" /></button>
+            </div>
+            <form onSubmit={(e) => { e.preventDefault(); alert('Vielen Dank! Das Ingenieurteam der ALRO GmbH prüft Ihre Anfrage.'); setIsCalculatorOpen(false); }} className="space-y-3">
+              <input type="text" required placeholder="Ihr Name / Firmenname *" className="w-full bg-zinc-950 border border-zinc-800 rounded-xl p-3 text-xs text-white" />
+              <input type="tel" required placeholder="Ihre Telefonnummer *" className="w-full bg-zinc-950 border border-zinc-800 rounded-xl p-3 text-xs text-white" />
+              <textarea placeholder="Welches Metallbau-Projekt planen Sie?" rows={3} className="w-full bg-zinc-950 border border-zinc-800 rounded-xl p-3 text-xs text-white" />
+              <button type="submit" className="w-full bg-orange-600 hover:bg-orange-500 text-zinc-950 font-extrabold py-3 rounded-xl text-xs uppercase tracking-wider">Kostenfrei Anfragen</button>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* Impressum Modal */}
+      {isImpressumOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-zinc-950/80 backdrop-blur-md">
+          <div className="bg-zinc-900 border border-zinc-800 rounded-2xl max-w-lg w-full p-6 space-y-4 text-xs text-zinc-300">
+            <div className="flex justify-between items-center border-b border-zinc-800 pb-3">
+              <h3 className="font-heading text-lg font-bold text-white">Impressum</h3>
+              <button onClick={() => setIsImpressumOpen(false)} className="text-zinc-400 hover:text-white"><X className="w-5 h-5" /></button>
+            </div>
+            <p><strong>ALRO GmbH Metallbau</strong><br />Kerpen, Erftkreis<br />Telefon: 02237 / 67 01 27</p>
+          </div>
+        </div>
+      )}
+
+      {/* Datenschutz Modal */}
+      {isDatenschutzOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-zinc-950/80 backdrop-blur-md">
+          <div className="bg-zinc-900 border border-zinc-800 rounded-2xl max-w-lg w-full p-6 space-y-4 text-xs text-zinc-300">
+            <div className="flex justify-between items-center border-b border-zinc-800 pb-3">
+              <h3 className="font-heading text-lg font-bold text-white">Datenschutzerklärung</h3>
+              <button onClick={() => setIsDatenschutzOpen(false)} className="text-zinc-400 hover:text-white"><X className="w-5 h-5" /></button>
+            </div>
+            <p>Verantwortlicher im Sinne der DSGVO: ALRO GmbH Metallbau. Wir verarbeiten Ihre Daten ausschließlich zur Bearbeitung Ihrer Anfrage.</p>
+          </div>
+        </div>
+      )}
 
     </div>
   );
